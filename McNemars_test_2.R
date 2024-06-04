@@ -1,4 +1,4 @@
-
+# take the 4 files from McNemars and import them here 
 
 ptm <- proc.time()
 cr_col_sz<- read.csv(file="cr_col_size.csv", header=TRUE, sep=",")
@@ -44,6 +44,8 @@ C=sum(C_max)
 
 #Z score, objective function of robust McNemar's test
 z=(B-C-1)/sqrt(B+C)
+
+# z = -29 and this means that the two variables EDUC and METHUSE have no effect. however, it is recommended to add more variables 
 
 #p-value
 pnorm(z,mean=0, sd=1, lower.tail=FALSE)

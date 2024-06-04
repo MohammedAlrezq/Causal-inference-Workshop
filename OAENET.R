@@ -1,4 +1,21 @@
+install.packages("msaenet")
+install.packages("glmnet")
+install.packages("MatchIt")
+install.packages("lmtest")
+install.packages("phonTools")
+install.packages("MASS")
+install.packages("sandwich")
+install.packages("CovSel")
+install.packages("mlbench")
+install.packages("mltools")
+install.packages("data.table")
+install.packages("matrixStats")
+install.packages("dplyr")
+install.packages("tictoc")
+install.packages("boot")
+
 ########################################
+install.packages("msaenet")
 library(msaenet)
 library(glmnet)
 library(MatchIt)
@@ -26,7 +43,7 @@ library(boot)
 #Processing data
 
 raw_data = read.csv("Statsig.csv")
-raw_data = subset(raw_data, select = -c(X) )
+raw_data = subset(raw_data, select = -c(X) ) # deleting extra column 
 
 #####################################
 
@@ -56,6 +73,7 @@ for (i in 1:1){
 
 ########################
 # Preparing the covariates, outcomes, and treat data frame
+# i might need to change the variabels settign for other experiment 
 
 df = raw_data
 Y = df$treatment_flag #enter your outcome variable 
@@ -111,7 +129,7 @@ xx_true = XX[, beta_ps_non_zero]
 
 #Variables selected by OAENet
 onet.true.var.list = names(xx_true)
-treat.form = formula(paste("treatment_flag~",paste(onet.true.var.list,collapse="+")))
+treat.form = formula(paste("treatment_flag~",paste(onet.true.var.list,collapse="+"))) # here we might i need change for other experiment 
 
 ## performing matching using Nearest Neighbor Matching 
 mm = matchit(treat.form, data = df, method = "nearest", distance = "glm", ratio = 1, caliper = .25, link = "logit", estimand = "ATT", replace = FALSE, discard = "control")
@@ -127,3 +145,6 @@ print(att.onet[itr])
 print("Variables selected by OAENet")
 print(onet.true.var.list)
 }
+
+
+# avg treatmetn effect: 9% means that if an individual who participant for treatment is 9% higher to complete treatment than those who do not. Keep in mind that the number (%) might change for each run , but the feature selection are the same (same variables)

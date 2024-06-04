@@ -1,4 +1,7 @@
 
+# based on avg treatment effect , here we want ot know if it is statistical signifinat or not 
+# also enter the vraibels selected from OAENET as they are confounders 
+# 
 control <- read.csv(file="control.csv", header=TRUE, sep=",")
 
 treatment <- read.csv(file="treatment.csv", header=TRUE, sep=",")
@@ -9,10 +12,10 @@ control = subset(control, select = -c(shg_flag)) # remove treatment variable
 treatment =  subset(treatment, select = -c(shg_flag)) # remove treatment variable
 #Read data files 
 
-t_G <- split(treatment, list( treatment$METHUSE,treatment$DIVISION )) 
+t_G <- split(treatment, list( treatment$METHUSE,treatment$EDUC )) 
 
 
-c_G <- split(control, list( control$METHUSE, control$DIVISION)) 
+c_G <- split(control, list( control$METHUSE, control$EDUC)) 
 
 
 
